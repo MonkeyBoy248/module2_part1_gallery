@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <script type="module" src="../build/scripts/gallery.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header__container _container">
+      <div class="header__inner">
+        <h1 class="header__title">Gallery</h1>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <section class="gallery">
+      <div class="gallery__container _container">
+        <div class="gallery__inner">
+          <div class="gallery__photos">
+          </div>
+          <hr class="gallery__divider">
+          <nav class="gallery__pages">
+            <ul class="gallery__links-list">
+              <li class="gallery__link-item active">
+                <a href="" class="gallery__page-link">1</a>
+              </li>
+              <li class="gallery__link-item">
+                <a href="" class="gallery__page-link">2</a>
+              </li>
+              <li class="gallery__link-item">
+                <a href="" class="gallery__page-link">3</a>
+              </li>
+              <li class="gallery__link-item">
+                <a href="" class="gallery__page-link">4</a>
+              </li>
+              <li class="gallery__link-item">
+                <a href="" class="gallery__page-link">5</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="gallery__error-pop-up">
+    <div class="gallery__pop-up-container">
+      <div class="gallery__error">
+        <span class="gallery__notification-sign">!</span>
+        <p class="gallery__error-message"></p>
+      </div>
+    </div>
+  </div>
+  <template class="gallery__template">
+    <figure class="gallery__picture-wrapper">
+      <img class="gallery__img" src="" alt="">
+    </figure>
+  </template>
+</body>
+</html>
