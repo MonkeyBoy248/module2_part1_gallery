@@ -1,12 +1,12 @@
-import { getToken, deleteToken, Token } from "../modules/token_management";
+import { getToken, deleteToken } from "../modules/token_management";
 import { galleryServerUrl, loginUrl, currentUrl } from "../modules/environment_variables";
 import { removeEventListeners, EventListener } from "../modules/event_listeners_management";
 
-const galleryPhotos = <HTMLElement>document.querySelector('.gallery__photos');
-const galleryTemplate = <HTMLTemplateElement>document.querySelector('.gallery__template');
-const pagesLinksContainer = <HTMLElement>document.querySelector('.gallery__links-list');
-const galleryErrorMessage = <HTMLElement>document.querySelector('.gallery__error-message');
-const galleryPopup = <HTMLElement>document.querySelector('.gallery__error-pop-up');
+const galleryPhotos = document.querySelector('.gallery__photos') as HTMLElement;
+const galleryTemplate = document.querySelector('.gallery__template') as HTMLTemplateElement;
+const pagesLinksContainer = document.querySelector('.gallery__links-list') as HTMLElement;
+const galleryErrorMessage = document.querySelector('.gallery__error-message') as HTMLElement;
+const galleryPopup = document.querySelector('.gallery__error-pop-up') as HTMLElement;
 const galleryEventsArray: EventListener[] = [
   {target: document, type: 'DOMContentLoaded', handler: getCurrentPageImages},
   {target: pagesLinksContainer, type: 'click', handler: changeCurrentPage},
@@ -40,8 +40,8 @@ function createPictureTemplate (pictures: GalleryData): void {
   galleryPhotos.innerHTML = ''
 
   for (let object of pictures.objects) {
-    const picture = <HTMLElement>galleryTemplate.content.cloneNode(true);
-    const image = <HTMLElement>picture.children[0].querySelector('.gallery__img');
+    const picture = galleryTemplate.content.cloneNode(true) as HTMLElement;
+    const image = picture.children[0].querySelector('.gallery__img') as HTMLElement;
     
     image!.setAttribute('src', object);
     galleryPhotos.insertAdjacentElement('beforeend', image);
@@ -100,7 +100,7 @@ function getCurrentPageImages (): void {
 function changeCurrentPage (e: Event): void {
   const currentActiveLink = pagesLinksContainer.querySelector('.active');
   e.preventDefault();
-  const target = <HTMLElement>e.target!
+  const target = e.target! as HTMLElement;
   const targetClosestLi = target.closest('li');
 
   if (currentActiveLink !== targetClosestLi) {

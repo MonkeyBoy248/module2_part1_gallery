@@ -3,19 +3,27 @@ import { authenticationServerUrl, galleryUrl, currentUrl } from "../modules/envi
 import { removeEventListeners, EventListener } from "../modules/event_listeners_management";
 
 const loginForm = document.forms!.namedItem("login");
-const emailInput = <HTMLInputElement>loginForm!.elements.namedItem("email");
-const passwordInput = <HTMLInputElement>loginForm!.elements.namedItem("password");
-const submitButton = <HTMLButtonElement>loginForm!.elements.namedItem("submit");
+const emailInput = loginForm!.elements.namedItem("email") as HTMLInputElement;
+const passwordInput = loginForm!.elements.namedItem("password") as HTMLInputElement;
+const submitButton = loginForm!.elements.namedItem("submit") as HTMLButtonElement;
 const submitErrorContainer = loginForm!.querySelector('.login-form__submit-error-message');
 const currentPage = currentUrl.searchParams.get('currentPage');
-const authenticationEventsArray: EventListener[] = [
-  {target: emailInput, type: 'input', handler: validateEmailInput}, {target: passwordInput, type: 'change', handler: validatePasswordInput}, {target: <HTMLElement>loginForm, type: 'submit', handler: submitForm}, {target: <HTMLElement>loginForm, type: 'focusin', handler: resetErrorMessage}
+const authenticationEventsArray: Array<EventListener> = [
+  {target: emailInput, type: 'input', handler: validateEmailInput}, 
+  {target: passwordInput, type: 'change', handler: validatePasswordInput},
+  {target: loginForm as HTMLElement, type: 'submit', handler: submitForm}, 
+  {target: loginForm as HTMLElement, type: 'focusin', handler: resetErrorMessage}
 ];
 
 type AuthenticationResponse = Token | AuthenticationErrorMessage;
 
+interface User {
+  email: string;
+  password: string;
+}
+
 function validateField (field: HTMLInputElement, pattern: RegExp, text: string): void {
-  const targetErrorContainer = <HTMLElement>loginForm!.querySelector(`.login-form__${field.name}-error-message`);
+  const targetErrorContainer = loginForm!.querySelector(`.login-form__${field.name}-error-message`) as HTMLElement;
   targetErrorContainer!.textContent = '';
   submitButton.disabled = false;
   submitButton.classList.remove('_disabled')
@@ -34,7 +42,7 @@ function showErrorMessage (text: string, targetElement: HTMLElement, field: HTML
 }
 
 async function sendFormData (url: string) {
-  const user = {
+  const user: User = {
     email: emailInput.value,
     password: passwordInput.value,
   }
@@ -52,8 +60,8 @@ async function sendFormData (url: string) {
 
     if ('token' in data) {
       return data;
-    }
-
+    } 
+    
     submitErrorContainer!.textContent = `${data.errorMessage}`;
   } catch (err) {
     console.log(err);
@@ -92,8 +100,7 @@ function submitForm (e: Event) {
         window.location.replace(`${galleryUrl}?page=${currentPage}`)
       }
     }
-  }
-  )
+  })
   
   emailInput.value = '';
   passwordInput.value = '';
