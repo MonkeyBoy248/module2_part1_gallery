@@ -1,4 +1,4 @@
-const tokenKey = 'token';
+const tokenKey: string = 'token';
 
 export interface Token {
   token: string;
@@ -10,11 +10,11 @@ export interface AuthenticationErrorMessage {
 }
 
 export function getToken (): Token {
-  return JSON.parse(localStorage.getItem(tokenKey)!);
+  return JSON.parse(localStorage.getItem(tokenKey) || '');
 }
 
 export function getTokenTimestamp (): number {
-  return JSON.parse(localStorage.getItem(tokenKey)!).timestamp;
+  return JSON.parse(localStorage.getItem(tokenKey) || '');
 }
 
 export function setToken (token: Token): void {
