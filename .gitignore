@@ -2,3 +2,4 @@
 .editorconfig
 .vs_code
 tsconfig.json
+.DS_Store
