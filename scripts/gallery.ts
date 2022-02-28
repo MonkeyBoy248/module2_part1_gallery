@@ -4,12 +4,12 @@ import * as eventListenersManagement from "../modules/event_listeners_management
 
 const galleryPhotos = document.querySelector('.gallery__photos') as HTMLElement;
 const galleryTemplate = document.querySelector('.gallery__template') as HTMLTemplateElement;
-const pagesLinksContainer = document.querySelector('.gallery__links-list') as HTMLElement;
+const pagesLinksList = document.querySelector('.gallery__links-list') as HTMLElement;
 const galleryErrorMessage = document.querySelector('.gallery__error-message') as HTMLElement;
 const galleryPopup = document.querySelector('.gallery__error-pop-up') as HTMLElement;
 const galleryEventsArray: eventListenersManagement.EventListener[] = [
   {target: document, type: 'DOMContentLoaded', handler: getCurrentPageImages},
-  {target: pagesLinksContainer, type: 'click', handler: changeCurrentPage},
+  {target: pagesLinksList, type: 'click', handler: changeCurrentPage},
 ]
 
 interface GalleryData {
@@ -18,7 +18,7 @@ interface GalleryData {
   total: number;
 }
 
-async function getPicturesData (url: string): Promise<void> {
+async function getPicturesData (url: string): Promise<void>{
   if (getToken()) {
     try {
       const response = await fetch(url, {
@@ -43,7 +43,7 @@ function createPictureTemplate (pictures: GalleryData): void {
     const picture = galleryTemplate.content.cloneNode(true) as HTMLElement;
     const image = picture.children[0].querySelector('.gallery__img') as HTMLElement;
     
-    image!.setAttribute('src', object);
+    image.setAttribute('src', object);
     galleryPhotos.insertAdjacentElement('beforeend', image);
   }
 }
@@ -78,19 +78,23 @@ function redirectWhenTokenExpires (delay: number): void {
 
 function getCurrentPageImages (): void {
   if(!currentUrl.searchParams.get('page')) {
-    getPicturesData(`${galleryServerUrl}?page=1`);
+    getPicturesData(`${galleryServerUrl}?page=1`)
   }else {
     getPicturesData(`${galleryServerUrl}?page=${currentUrl.searchParams.get('page')}`);
   }
 
-  const currentActiveLink = pagesLinksContainer.querySelector('.active');
+  const currentActiveLink = pagesLinksList.querySelector('.active');
   
-  for (let link of pagesLinksContainer.children) {
-    link.setAttribute('page-number', link.querySelector('a')!.innerText);
-
-    if (link.getAttribute('page-number') === currentUrl.searchParams.get('page')) {
-      currentActiveLink!.classList.remove('active');
-      link.classList.add('active');
+  for (let item of pagesLinksList.children) {
+    const link = item.querySelector('a');
+    
+    if (link?.textContent) {
+      item.setAttribute('page-number', link.textContent);
+    }
+    
+    if (item.getAttribute('page-number') === currentUrl.searchParams.get('page')) {
+      currentActiveLink?.classList.remove('active');
+      item.classList.add('active');
     }
   }
 
@@ -98,16 +102,16 @@ function getCurrentPageImages (): void {
 }
 
 function changeCurrentPage (e: Event): void {
-  const currentActiveLink = pagesLinksContainer.querySelector('.active');
+  const currentActiveLink = pagesLinksList.querySelector('.active');
   e.preventDefault();
-  const target = e.target! as HTMLElement;
+  const target = e.target as HTMLElement;
   const targetClosestLi = target.closest('li');
 
   if (currentActiveLink !== targetClosestLi) {
-    setNewUrl(targetClosestLi!.getAttribute('page-number')!);
+    setNewUrl(targetClosestLi?.getAttribute('page-number')!);
     getPicturesData(`${galleryServerUrl}?page=${currentUrl.searchParams.get('page')}`);
     
-    currentActiveLink!.classList.remove('active');
+    currentActiveLink?.classList.remove('active');
     target.classList.add('active');
 
     redirectWhenTokenExpires(5000);
@@ -115,15 +119,12 @@ function changeCurrentPage (e: Event): void {
 }
 
 document.addEventListener('DOMContentLoaded', getCurrentPageImages);
-pagesLinksContainer.addEventListener('click', changeCurrentPage);
+pagesLinksList.addEventListener('click', changeCurrentPage);
 
 setInterval(() => {
   deleteToken();
   redirectWhenTokenExpires(5000);
 }, 300000)
-
-
-
 
 
 

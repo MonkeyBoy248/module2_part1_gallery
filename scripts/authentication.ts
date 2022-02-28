@@ -2,11 +2,11 @@ import * as tokenManagement from "../modules/token_management";
 import { authenticationServerUrl, galleryUrl, currentUrl } from "../modules/environment_variables";
 import * as eventListenersManagement from "../modules/event_listeners_management";
 
-const loginForm = document.forms!.namedItem("login");
-const emailInput = loginForm!.elements.namedItem("email") as HTMLInputElement;
-const passwordInput = loginForm!.elements.namedItem("password") as HTMLInputElement;
-const submitButton = loginForm!.elements.namedItem("submit") as HTMLButtonElement;
-const submitErrorContainer = loginForm!.querySelector('.login-form__submit-error-message');
+const loginForm = document.forms?.namedItem("login");
+const emailInput = loginForm?.elements.namedItem("email") as HTMLInputElement;
+const passwordInput = loginForm?.elements.namedItem("password") as HTMLInputElement;
+const submitButton = loginForm?.elements.namedItem("submit") as HTMLButtonElement;
+const submitErrorContainer = loginForm?.querySelector('.login-form__submit-error-message');
 const currentPage = currentUrl.searchParams.get('currentPage');
 const authenticationEventsArray: Array<eventListenersManagement.EventListener> = [
   {target: emailInput, type: 'input', handler: validateEmailInput}, 
@@ -24,7 +24,7 @@ interface User {
 
 function validateField (field: HTMLInputElement, pattern: RegExp, text: string): void {
   const targetErrorContainer = loginForm!.querySelector(`.login-form__${field.name}-error-message`) as HTMLElement;
-  targetErrorContainer!.textContent = '';
+  targetErrorContainer.textContent = '';
   submitButton.disabled = false;
   submitButton.classList.remove('_disabled')
   field.classList.remove('invalid');
