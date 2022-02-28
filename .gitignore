@@ -1,4 +1,4 @@
-/build
+build/
 .editorconfig
 .vs_code
 tsconfig.json
