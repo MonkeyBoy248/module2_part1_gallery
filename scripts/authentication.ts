@@ -1,6 +1,6 @@
-import { getToken, setToken, Token, AuthenticationErrorMessage } from "../modules/token_management";
+import * as tokenManagement from "../modules/token_management";
 import { authenticationServerUrl, galleryUrl, currentUrl } from "../modules/environment_variables";
-import { removeEventListeners, EventListener } from "../modules/event_listeners_management";
+import * as eventListenersManagement from "../modules/event_listeners_management";
 
 const loginForm = document.forms!.namedItem("login");
 const emailInput = loginForm!.elements.namedItem("email") as HTMLInputElement;
@@ -8,14 +8,14 @@ const passwordInput = loginForm!.elements.namedItem("password") as HTMLInputElem
 const submitButton = loginForm!.elements.namedItem("submit") as HTMLButtonElement;
 const submitErrorContainer = loginForm!.querySelector('.login-form__submit-error-message');
 const currentPage = currentUrl.searchParams.get('currentPage');
-const authenticationEventsArray: Array<EventListener> = [
+const authenticationEventsArray: Array<eventListenersManagement.EventListener> = [
   {target: emailInput, type: 'input', handler: validateEmailInput}, 
   {target: passwordInput, type: 'change', handler: validatePasswordInput},
   {target: loginForm as HTMLElement, type: 'submit', handler: submitForm}, 
   {target: loginForm as HTMLElement, type: 'focusin', handler: resetErrorMessage}
 ];
 
-type AuthenticationResponse = Token | AuthenticationErrorMessage;
+type AuthenticationResponse = tokenManagement.Token | tokenManagement.AuthenticationErrorMessage;
 
 interface User {
   email: string;
@@ -87,12 +87,12 @@ function submitForm (e: Event) {
   sendFormData(authenticationServerUrl)
   .then(data => {
     if (data) {
-      setToken(data)
+      tokenManagement.setToken(data)
     }
   })
   .then(() => {
-    if (getToken()) {
-      removeEventListeners(authenticationEventsArray);
+    if (tokenManagement.getToken()) {
+      eventListenersManagement.removeEventListeners(authenticationEventsArray);
 
       if (!currentUrl.searchParams.get('currentPage')) {
         window.location.replace(`${galleryUrl}?page=1`)

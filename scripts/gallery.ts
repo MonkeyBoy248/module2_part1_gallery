@@ -1,13 +1,13 @@
 import { getToken, deleteToken } from "../modules/token_management";
 import { galleryServerUrl, loginUrl, currentUrl } from "../modules/environment_variables";
-import { removeEventListeners, EventListener } from "../modules/event_listeners_management";
+import * as eventListenersManagement from "../modules/event_listeners_management";
 
 const galleryPhotos = document.querySelector('.gallery__photos') as HTMLElement;
 const galleryTemplate = document.querySelector('.gallery__template') as HTMLTemplateElement;
 const pagesLinksContainer = document.querySelector('.gallery__links-list') as HTMLElement;
 const galleryErrorMessage = document.querySelector('.gallery__error-message') as HTMLElement;
 const galleryPopup = document.querySelector('.gallery__error-pop-up') as HTMLElement;
-const galleryEventsArray: EventListener[] = [
+const galleryEventsArray: eventListenersManagement.EventListener[] = [
   {target: document, type: 'DOMContentLoaded', handler: getCurrentPageImages},
   {target: pagesLinksContainer, type: 'click', handler: changeCurrentPage},
 ]
@@ -69,7 +69,7 @@ function updateMessageBeforeRedirection (timer: number): void {
 function redirectWhenTokenExpires (delay: number): void {
   if (!getToken()) {
     updateMessageBeforeRedirection(delay / 1000);
-    removeEventListeners(galleryEventsArray);
+    eventListenersManagement.removeEventListeners(galleryEventsArray);
     setTimeout(() => {
       window.location.replace(`${loginUrl}?currentPage=${currentUrl.searchParams.get('page')}`);
     }, delay)
