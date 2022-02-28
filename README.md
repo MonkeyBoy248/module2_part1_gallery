@@ -3,7 +3,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/MonkeyBoy248/module2_part1_gallery)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/MonkeyBoy248/module2_part1_gallery)
 
-MODULE-1-PART-3-gallery - it's a simple gallery with pictures of cute and funny animals :)
+MODULE-2-PART-1-gallery - it's a simple gallery with pictures of cute and funny animals :)
 
 ## Project Status ##
 
@@ -19,7 +19,7 @@ In progress
 ## Project Structure ##
 
 ```
-MODULE1_PART3_GALLERY
+MODULE2_PART1_GALLERY
 |__assets
 |
 |__build
