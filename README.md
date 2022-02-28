@@ -14,6 +14,7 @@ In progress
 * HTML5
 * CSS3
 * JavaScript
+* TypeScript
 
 ## Project Structure ##
 
@@ -21,13 +22,29 @@ In progress
 MODULE1_PART3_GALLERY
 |__assets
 |
+|__build
+|       |__modules
+|       |         |__environment_varibales.js
+|       |         |__token__management.js
+|       |         |__event_listeners_management.js
+|       |
+|       |
+|       |__scripts
+|                 |__gallery.js
+|                 |__authentication.js
+|
 |__pages
 |      |__index.html
 |      |__authentication.html
 |
+|__modules
+|         |__environment_varibales.ts
+|         |__token__management.ts
+|         |__event_listeners_management.ts
+|
 |__scripts
-|       |__gallery.js
-|       |__authentication.js
+|       |__gallery.ts
+|       |__authentication.ts
 |
 |__styles
         |__authentication.css
