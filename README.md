@@ -1,6 +1,6 @@
-# MODULE-1-PART-3-gallery #
+# MODULE-2-PART-1-gallery #
 
-![GitHub issues](https://img.shields.io/github/issues/MonkeyBoy248/module1_part3_gallery)
+![GitHub issues](https://img.shields.io/github/issues/MonkeyBoy248/module2_part1_gallery)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/MonkeyBoy248/module2_part1_gallery)
 
 MODULE-1-PART-3-gallery - it's a simple gallery with pictures of cute and funny animals :)
