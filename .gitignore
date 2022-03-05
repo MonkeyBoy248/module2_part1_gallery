@@ -1,6 +1,6 @@
 build/
 .editorconfig
-.vs_code
+.vscode
 tsconfig.json
 .DS_Store
 .idea/
