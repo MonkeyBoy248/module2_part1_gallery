@@ -7,6 +7,7 @@ const galleryTemplate = document.querySelector('.gallery__template') as HTMLTemp
 const pagesLinksList = document.querySelector('.gallery__links-list') as HTMLElement;
 const galleryErrorMessage = document.querySelector('.gallery__error-message') as HTMLElement;
 const galleryPopup = document.querySelector('.gallery__error-pop-up') as HTMLElement;
+const galleryLinkTemplate = document.querySelector('.gallery__link-template') as HTMLTemplateElement;
 const galleryEventsArray: eventListenersManagement.EventListener[] = [
   {target: document, type: 'DOMContentLoaded', handler: getCurrentPageImages},
   {target: pagesLinksList, type: 'click', handler: changeCurrentPage},
@@ -29,7 +30,9 @@ async function getPicturesData (url: string): Promise<void>{
       })
     
       const data: GalleryData = await response.json();
+      console.log(data);
       createPictureTemplate(data);
+      createLinksTemplate(data.total);
     } catch {
       showMessage(`There is no page with number ${url.charAt(url.length - 1)}. Please, enter a new value in the address bar`);
     }
@@ -41,10 +44,27 @@ function createPictureTemplate (pictures: GalleryData): void {
 
   for (let object of pictures.objects) {
     const picture = galleryTemplate.content.cloneNode(true) as HTMLElement;
-    const image = picture.children[0].querySelector('.gallery__img') as HTMLElement;
+    const imageWrapper = picture.children[0];
+    const image = imageWrapper.querySelector('.gallery__img') as HTMLElement;
     
     image.setAttribute('src', object);
-    galleryPhotos.insertAdjacentElement('beforeend', image);
+    galleryPhotos.insertAdjacentElement('beforeend', imageWrapper);
+  }
+}
+
+function createLinksTemplate (total: number): void {
+  pagesLinksList.innerHTML = '';
+
+  for (let i = 0; i < total; i++) {
+    const linkWrapper = galleryLinkTemplate.content.cloneNode(true) as HTMLElement;
+    const listItem = linkWrapper.children[0] as HTMLElement;
+    const link = listItem.querySelector('a');
+    
+    if (link) {
+      link.textContent = `${i + 1}`;
+      pagesLinksList.insertAdjacentElement('beforeend', listItem);
+      pagesLinksList.children[0].classList.add('active');
+    }
   }
 }
 
